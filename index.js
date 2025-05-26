@@ -5,6 +5,8 @@ const routes = require("./routes");
 
 const server = express();
 
+server.use(express.json())
+
 server.use("/v1",routes);
 
 server.use((err, req, res, next) => {
