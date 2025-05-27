@@ -1,7 +1,7 @@
 const {
   generateAccessToken,
   generateRefreshToken,
-} = require("../model/token.service");
+} = require("../service/token.service");
 const authService = require("../service/auth.service");
 
 async function registerUser(req, res, next) {
