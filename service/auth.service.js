@@ -45,8 +45,59 @@ const storeToken = async (userId, refreshToken) => {
   return updatedUser;
 };
 
+const removeRefreshToken = async (userId) => {
+  if (!userId) {
+    throw { code: 400, message: "One or more required fields are missing" };
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { refresh_token: null },
+    { new: true }
+  );
+
+  if (!updatedUser) {
+    throw { code: 404, message: "User not found" };
+  }
+
+  return updatedUser;
+};
+
+const getUserByEmail = async (email) => {
+  if (!email) {
+    throw { code: 400, message: "One or more required fields are missing" };
+  }
+
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    throw { code: 404, message: "User not found" };
+  }
+
+  return user;
+};
+
+const updatePassword = async (email, password) => {
+  if (!email || !password) {
+    throw { code: 400, message: "One or more required fields are missing" };
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw { code: 404, message: "User not found" };
+  }
+
+  user.password = password;
+  await user.save();
+
+  return true;
+};
+
 module.exports = {
   register,
   authenticate,
-  storeToken
+  storeToken,
+  removeRefreshToken,
+  getUserByEmail,
+  updatePassword
 };
