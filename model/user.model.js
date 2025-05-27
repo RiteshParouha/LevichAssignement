@@ -15,7 +15,8 @@ const schema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  refresh_token : String
 }, { timestamps: true });
 
 schema.pre("save", async function(next) {
