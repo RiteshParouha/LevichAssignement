@@ -16,6 +16,11 @@ const schema = mongoose.Schema({
     type: String,
     required: true
   },
+   permissions: {
+    type: [String],
+    enum: ['read', 'write', 'delete'],
+    default: ['read']
+  },
   refresh_token : String
 }, { timestamps: true });
 

@@ -2,12 +2,12 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../model/token.service");
-const userService = require("../service/auth.service");
+const authService = require("../service/auth.service");
 
 async function registerUser(req, res, next) {
   try {
     const user = req.body;
-    const result = await userService.register(user);
+    const result = await authService.register(user);
     res.sendStatus(201);
   } catch (error) {
     next(error);
@@ -18,13 +18,13 @@ async function loginUser(req, res, next) {
   try {
     const user = req.body;
 
-    const result = await userService.authenticate(user);
+    const result = await authService.authenticate(user);
 
     const token = generateAccessToken(result);
 
     const refreshToken = generateRefreshToken(result);
 
-    await userService.storeToken(result._id, refreshToken);
+    await authService.storeToken(result._id, refreshToken);
 
     res.status(200).json({
       user: {
@@ -55,7 +55,7 @@ async function logoutUser(req, res, next) {
   try {
     const user = req.user;
 
-    const updatedUser = await userService.removeRefreshToken(user._id);
+    const updatedUser = await authService.removeRefreshToken(user._id);
 
     res.status(200).json({
       message: "Logged out successfully",
@@ -68,7 +68,7 @@ async function logoutUser(req, res, next) {
 async function requestForgot(req, res, next) {
   try {
     const { email } = req.params;
-    const user = await userService.getUserByEmail(email);
+    const user = await authService.getUserByEmail(email);
 
     res.json({
       accessCode: 2558,
@@ -93,7 +93,7 @@ async function updatePassword(req, res, next) {
     };
   }
 
-  const result = await userService.updatePassword(email, password);
+  const result = await authService.updatePassword(email, password);
 
   if (result)
     res.json({
