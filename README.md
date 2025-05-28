@@ -2,7 +2,7 @@
 
 Postman Collection - https://api.postman.com/collections/25710761-fc2df1d1-fbfd-4adf-a0cf-980044e6ec5b?access_key=PMAT-01JWAM4VX3VAW2RCJMFJ3JSK3V
 
-Installation
+Installation 
 Clone the repository:
 git clone https://github.com/RiteshParouha/LevichAssignement.git
 cd LevichAssignement
